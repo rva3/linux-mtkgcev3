@@ -1,0 +1,90 @@
+// SPDX-License-Identifier: GPL-2.0+
+
+/dts-v1/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	compatible = "mediatek,gcev3";
+	model = "MediaTek GCE v3";
+
+	aliases {
+		uart0 = &uart0;
+	};
+
+	chosen {
+		tick-timer = &apxgpt;
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		timebase-frequency = <13000000>;
+
+		cpu0: cpu@0 {
+			device_type = "cpu";
+			reg = <0>;
+			status = "okay";
+			compatible = "riscv";
+			riscv,isa = "rv32ima";
+			riscv,priv-major = <1>;
+			riscv,priv-minor = <10>;
+
+			cpu0_intc: interrupt-controller {
+				#interrupt-cells = <1>;
+				interrupt-controller;
+				compatible = "riscv,cpu-intc";
+			};
+		};
+	};
+
+	memory@a8000000 {
+		device_type = "memory";
+		reg = <0xa8000000 0x2000000>;
+	};
+
+	clk26m: clk26m {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <26000000>;
+	};
+
+	clk13m: clk13m {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <13000000>;
+	};
+
+	clk32k: clk32k {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <32000>;
+	};
+
+	soc {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "simple-bus";
+		ranges;
+
+		clint: clint@2000000 {
+			compatible = "riscv,clint0";
+			reg = <0x02000000 0x10000>;
+			interrupts-extended = <&cpu0_intc 3 &cpu0_intc 7>;
+		};
+
+		apxgpt: timer@10008000 {
+			compatible = "mediatek,mt6577-timer";
+			reg = <0x10008000 0x1000>;
+			clocks = <&clk13m>, <&clk32k>;
+		};
+
+		uart0: serial@11002000 {
+			compatible = "mediatek,mt6577-uart-poll";
+			reg = <0x11002000 0x1000>;
+			clocks = <&clk26m>, <&clk26m>;
+			clock-names = "baud", "bus";
+		};
+	};
+};
+
