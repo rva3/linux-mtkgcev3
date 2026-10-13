@@ -103,7 +103,7 @@ static u64 clint_rdtime(struct clocksource *cs)
 static struct clocksource clint_clocksource = {
 	.name		= "clint_clocksource",
 	.rating		= 300,
-	.mask		= CLOCKSOURCE_MASK(64),
+	.mask		= CLOCKSOURCE_MASK(32),
 	.flags		= CLOCK_SOURCE_IS_CONTINUOUS,
 	.read		= clint_rdtime,
 };
