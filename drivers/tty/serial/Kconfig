@@ -906,6 +906,14 @@ config SERIAL_MSM
 	depends on ARCH_QCOM || COMPILE_TEST
 	select SERIAL_CORE
 
+config SERIAL_MTK_POLL
+	bool "MediaTek MT6577 IRQ-less driver"
+	depends on TTY
+	select SERIAL_CORE
+	default y if RISCV_M_MODE
+	help
+	  sudo mka bacon
+
 config SERIAL_MSM_CONSOLE
 	bool "MSM serial console support"
 	depends on SERIAL_MSM=y

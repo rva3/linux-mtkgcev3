@@ -56,6 +56,7 @@ obj-$(CONFIG_SERIAL_MESON)		+= meson_uart.o
 obj-$(CONFIG_SERIAL_MPC52xx)		+= mpc52xx_uart.o
 obj-$(CONFIG_SERIAL_MPS2_UART)		+= mps2-uart.o
 obj-$(CONFIG_SERIAL_MSM)		+= msm_serial.o
+obj-$(CONFIG_SERIAL_MTK_POLL)		+= mtk_poll.o
 obj-$(CONFIG_SERIAL_MUX)		+= mux.o
 obj-$(CONFIG_SERIAL_MVEBU_UART)		+= mvebu-uart.o
 obj-$(CONFIG_SERIAL_MXS_AUART)		+= mxs-auart.o
